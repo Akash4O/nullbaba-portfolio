@@ -2,6 +2,10 @@
 
 A mystical, cosmic-themed portfolio website showcasing the journey of NullBaba, the enlightened monk coder.
 
+## 🔗 Live Demo
+
+https://akash4o.github.io/nullbaba-portfolio
+
 ## 🚀 Features
 
 - **Fully Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
@@ -69,10 +73,6 @@ The portfolio features a cosmic monk-coder theme with:
 ## 📄 License
 
 MIT License - Feel free to use and modify for your own projects.
-
-## 🔗 Live Demo
-
-Open `index.html` in your browser to experience the mystical journey of NullBaba.
 
 ## 🥚 Hidden Easter Eggs
 
