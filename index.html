@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NullBaba - The Monk Coder</title>
+    <link rel="icon" href="null.jpeg" type="image/jpeg">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cosmic': {
+                            'dark': '#0a0a0f',
+                            'purple': '#1a0b2e',
+                            'blue': '#16213e',
+                            'glow': '#8b5cf6',
+                            'light': '#e0e7ff'
+                        }
+                    },
+                    fontFamily: {
+                        'monk': ['Cinzel', 'serif'],
+                        'tech': ['Fira Code', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'ripple': 'ripple 1s ease-out',
+                        'typewriter': 'typewriter 4s steps(40) infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="null.jpeg">
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="NullBaba - The Monk Coder's sacred portfolio. Awaken your code, null the bugs, embrace the silence.">
+    <meta name="keywords" content="NullBaba, monk coder, portfolio, web developer, JavaScript, React, Node.js, meditation, coding">
+    <meta name="author" content="NullBaba">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="NullBaba - The Monk Coder">
+    <meta property="og:description" content="Digital portfolio of NullBaba, the enlightened monk coder who nullifies bugs with ancient wisdom">
+    <meta property="og:image" content="null.jpeg">
+    <meta property="og:url" content="https://nullbaba.github.io/portfolio">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NullBaba - The Monk Coder">
+    <meta name="twitter:description" content="Digital portfolio of NullBaba, the enlightened monk coder who nullifies bugs with ancient wisdom">
+    <meta name="twitter:image" content="null.jpeg">
+    
+    <!-- Theme Color for Mobile -->
+    <meta name="theme-color" content="#8b5cf6">
+    <meta name="msapplication-TileColor" content="#8b5cf6">
+    <meta name="msapplication-navbutton-color" content="#8b5cf6">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Immediate scroll reset -->
+    <script>
+        // Immediate scroll to top before any other scripts
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) {
+            document.body.scrollTop = 0;
+        }
+        
+        // Disable scroll restoration
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        // Ensure navigation stays visible
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuButton = document.querySelector('#mobile-menu-button');
+            
+            if (header) {
+                header.style.visibility = 'visible';
+                header.style.opacity = '1';
+                header.style.zIndex = '1000';
+            }
+            
+            navLinks.forEach(link => {
+                link.style.visibility = 'visible';
+                link.style.opacity = '1';
+            });
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.style.visibility = 'visible';
+                mobileMenuButton.style.opacity = '1';
+            }
+            
+            // Remove loading class after a short delay
+            setTimeout(() => {
+                document.body.classList.remove('loading');
+            }, 100);
+        });
+    </script>
+    
+    <!-- Custom CSS -->
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+            100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+        }
+        
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+        
+        @keyframes typewriter {
+            0%, 90%, 100% { width: 0; }
+            30%, 60% { width: 100%; }
+        }
+        
+        /* Basic section visibility */
+        section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: block;
+            width: 100%;
+            clear: both;
+        }
+        
+        /* Ensure sections are visible */
+        #home, #about, #projects, #contact {
+            opacity: 1;
+            visibility: visible;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Ensure hero section is at the top */
+        #home {
+            margin-top: 0;
+            padding-top: 0;
+        }
+        
+        /* Prevent any unwanted positioning */
+        body {
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        
+        /* Disable smooth scrolling during page load */
+        body.loading {
+            scroll-behavior: auto !important;
+        }
+        
+        /* Ensure proper section stacking */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Force initial position */
+        html, body {
+            overflow-x: hidden;
+        }
+        
+        /* Ensure first section is at top */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Enhanced Navigation improvements */
+        header {
+            z-index: 1000 !important;
+            box-shadow: 0 4px 30px rgba(139, 92, 246, 0.4);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+            position: fixed !important;
+            top: 0 !important;
+            width: 100% !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: block !important;
+            transform: none !important;
+            height: 64px !important;
+        }
+        
+        /* Mobile header adjustments */
+        @media (max-width: 767px) {
+            header {
+                height: 56px !important; /* Smaller height on mobile */
+            }
+            
+            header nav > div {
+                height: 56px !important;
+            }
+            
+            header nav {
+                height: 56px !important;
+            }
+            
+            #home {
+                padding-top: 56px !important; /* Adjust for smaller header */
+            }
+        }
+        
+        /* Prevent any transforms or animations on header */
+        header * {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Force proper navigation layout */
+        header nav {
+            height: 64px !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        header nav > div {
+            height: 64px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Ensure nav is always visible */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex !important;
+            align-items: center;
+            color: #e0e7ff !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: none !important;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 0.5rem !important;
+        }
+        
+        /* Force navigation visibility during loading and any other state */
+        body.loading header,
+        body.loading .nav-link,
+        body.loading nav,
+        body header,
+        body .nav-link,
+        body nav {
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 1000 !important;
+            display: flex !important;
+            transform: none !important;
+        }
+        
+        /* Specific rules for desktop navigation */
+        @media (min-width: 768px) {
+            .hidden.md\\:flex,
+            .md\\:flex,
+            header .md\\:flex,
+            nav .md\\:flex {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                align-items: center !important;
+            }
+            
+            /* Ensure desktop navigation is always visible */
+            header .hidden.md\\:flex {
+                display: flex !important;
+            }
+            
+            /* Mobile menu should be hidden on desktop */
+            #mobile-menu-button {
+                display: none !important;
+            }
+            
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+        
+        /* Better desktop navigation targeting */
+        header nav > div > div.hidden {
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            align-items: center !important;
+        }
+        
+        @media (min-width: 768px) {
+            .hidden.md\\:flex,
+            .md\\:flex,
+            header .hidden,
+            nav .hidden {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                align-items: center !important;
+            }
+        }
+        
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .text-4xl { font-size: 2rem !important; }
+            .text-3xl { font-size: 1.875rem !important; }
+            .text-2xl { font-size: 1.5rem !important; }
+            .text-xl { font-size: 1rem !important; } /* Reduced for mobile */
+            .text-5xl { font-size: 2.5rem !important; }
+            .text-6xl { font-size: 3rem !important; }
+            
+            .px-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+            .px-6 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .px-8 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+            
+            .py-20 { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+            .py-12 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+            
+            .mb-16 { margin-bottom: 2rem !important; }
+            .mb-12 { margin-bottom: 2rem !important; }
+            .mb-8 { margin-bottom: 1.5rem !important; }
+            
+            .gap-8 { gap: 1rem !important; }
+            .gap-12 { gap: 1.5rem !important; }
+            
+            .w-32 { width: 6rem !important; }
+            .h-32 { height: 6rem !important; }
+            
+            .min-h-screen { min-height: calc(100vh - 4rem) !important; }
+            
+            .project-card {
+                min-height: 350px !important;
+                max-height: 450px !important;
+                padding: 1rem !important;
+            }
+            
+            .monk-card {
+                padding: 1rem !important;
+            }
+            
+            .scroll-indicator {
+                bottom: 20px !important;
+            }
+            
+            .w-24 { width: 4rem !important; }
+            .h-1 { height: 0.125rem !important; }
+            
+            /* Mobile navigation specific fixes */
+            header nav {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            
+            header .flex.items-center.space-x-3 {
+                gap: 0.5rem !important;
+            }
+            
+            header .text-xl {
+                font-size: 0.875rem !important; /* Smaller logo text */
+            }
+            
+            header .text-xs {
+                font-size: 0.5rem !important; /* Smaller subtitle */
+            }
+            
+            header .w-10.h-10 {
+                width: 2rem !important;
+                height: 2rem !important;
+            }
+            
+            #mobile-menu-button {
+                padding: 0.5rem !important;
+            }
+            
+            #mobile-menu-button svg {
+                width: 1.25rem !important;
+                height: 1.25rem !important;
+            }
+        }
+        
+        /* Tablet Responsiveness */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .text-5xl { font-size: 3rem !important; }
+            .text-6xl { font-size: 3.5rem !important; }
+            .gap-8 { gap: 1.5rem !important; }
+            .gap-12 { gap: 2rem !important; }
+            
+            .project-card {
+                min-height: 380px !important;
+                max-height: 480px !important;
+            }
+        }
+        
+        /* Large Mobile and Small Tablet */
+        @media (max-width: 767px) {
+            .typewriter-text {
+                font-size: 1rem !important;
+                text-align: center !important;
+            }
+            
+            .orbital {
+                display: none; /* Hide complex animations on mobile for better performance */
+            }
+            
+            .space-x-3 > * + * {
+                margin-left: 0.75rem !important;
+            }
+            
+            .space-x-4 > * + * {
+                margin-left: 1rem !important;
+            }
+        }
+        
+        /* Fix navigation container layout */
+        header nav > div {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+        }
+        
+        /* Ensure logo section is properly positioned */
+        header .flex.items-center:first-child {
+            display: flex !important;
+            align-items: center !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Navigation links container positioning */
+        header .space-x-1 {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.25rem !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #a855f7);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+        
+        /* Tooltip styles for desktop navigation */
+        .nav-link[title]:hover::before {
+            content: attr(title);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 92, 246, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1001;
+            opacity: 0;
+            animation: fadeInTooltip 0.3s ease forwards;
+        }
+        
+        @keyframes fadeInTooltip {
+            from { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        
+        /* Ensure nav text is visible */
+        .nav-link span {
+            color: inherit !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Mobile menu button visibility */
+        #mobile-menu-button {
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 1001 !important;
+        }
+        
+        /* Mobile responsive rules */
+        @media (max-width: 767px) {
+            #mobile-menu-button {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+        }
+        
+        /* Desktop rules */
+        @media (min-width: 768px) {
+            #mobile-menu-button {
+                display: none !important;
+            }
+        }
+        
+        /* Logo section visibility */
+        header .flex.items-center {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Projects Grid Enhancement */
+        #projects .grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+            gap: 2rem !important;
+        }
+        
+        /* Ensure header visibility */
+        .text-cosmic-glow {
+            color: #8b5cf6 !important;
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+        }
+        
+        /* Ensure hero section has proper top margin */
+        #home {
+            margin-top: 0;
+            padding-top: 64px; /* Account for fixed header */
+        }
+        
+        /* Mobile menu styles */
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            min-height: 44px; /* Ensure minimum touch target size */
+            touch-action: manipulation;
+        }
+        
+        /* Enhanced mobile touch targets and responsiveness */
+        @media (max-width: 767px) {
+            /* Hide desktop navigation */
+            .hidden.md\\:flex {
+                display: none !important;
+            }
+            
+            /* Show mobile menu button */
+            #mobile-menu-button {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            .nav-link,
+            .mobile-nav-link,
+            button {
+                min-height: 44px !important;
+                min-width: 44px !important;
+                touch-action: manipulation;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+            }
+            
+            input,
+            textarea {
+                font-size: 16px !important; /* Prevent zoom on iOS */
+            }
+            
+            /* Improve mobile menu visibility and interaction */
+            #mobile-menu {
+                position: absolute !important;
+                top: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 999 !important;
+                max-height: calc(100vh - 64px) !important;
+                overflow-y: auto !important;
+                background: rgba(26, 11, 46, 0.95) !important;
+                backdrop-filter: blur(20px) !important;
+                border-top: 1px solid rgba(139, 92, 246, 0.3) !important;
+            }
+            
+            /* Mobile navigation links styling */
+            .mobile-nav-link {
+                padding: 16px !important;
+                border-bottom: 1px solid rgba(139, 92, 246, 0.1) !important;
+                transition: all 0.3s ease !important;
+            }
+            
+            .mobile-nav-link:hover {
+                background: rgba(139, 92, 246, 0.1) !important;
+                transform: translateX(5px) !important;
+            }
+            
+            /* Better mobile spacing */
+            .space-y-2 > * + * {
+                margin-top: 0.5rem !important;
+            }
+            
+            .space-y-4 > * + * {
+                margin-top: 1rem !important;
+            }
+            
+            .space-y-6 > * + * {
+                margin-top: 1.5rem !important;
+            }
+            
+            /* Navigation container responsive layout */
+            header nav > div {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            
+            /* Logo section mobile adjustments */
+            header .flex.items-center:first-child {
+                flex-shrink: 0 !important;
+                max-width: 60% !important; /* Prevent overflow */
+            }
+            
+            header .flex.items-center:first-child .text-xl {
+                font-size: 0.875rem !important; /* Much smaller */
+                line-height: 1.2 !important;
+            }
+            
+            header .flex.items-center:first-child .text-xs {
+                font-size: 0.5rem !important; /* Much smaller */
+                line-height: 1.1 !important;
+            }
+            
+            /* Mobile menu button adjustments */
+            #mobile-menu-button {
+                flex-shrink: 0 !important;
+                padding: 0.5rem !important;
+                min-width: 2.5rem !important;
+                min-height: 2.5rem !important;
+            }
+            
+            /* Logo image size adjustment */
+            header .w-10.h-10 {
+                width: 1.75rem !important;
+                height: 1.75rem !important;
+            }
+            
+            /* Reduce spacing in logo section */
+            header .space-x-3 {
+                gap: 0.375rem !important;
+            }
+            
+            /* Ensure the navigation container doesn't overflow */
+            header nav > div {
+                overflow: hidden !important;
+                white-space: nowrap !important;
+            }
+            
+            /* Make logo text container more compact */
+            header .flex.flex-col {
+                min-width: 0 !important; /* Allow text to shrink */
+            }
+        }
+        
+        /* Tablet responsive navigation */
+        @media (min-width: 768px) {
+            /* Show desktop navigation */
+            .hidden.md\\:flex {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            
+            /* Hide mobile menu button */
+            #mobile-menu-button {
+                display: none !important;
+            }
+            
+            /* Hide mobile menu */
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+        
+        /* Extra small mobile devices */
+        @media (max-width: 360px) {
+            header .flex.items-center:first-child .text-xl {
+                font-size: 0.75rem !important; /* Even smaller for tiny screens */
+            }
+            
+            header .flex.items-center:first-child .text-xs {
+                display: none !important; /* Hide subtitle on very small screens */
+            }
+            
+            header .w-10.h-10 {
+                width: 1.5rem !important;
+                height: 1.5rem !important;
+            }
+            
+            header nav > div {
+                padding-left: 0.25rem !important;
+                padding-right: 0.25rem !important;
+            }
+            
+            #mobile-menu-button {
+                min-width: 2rem !important;
+                min-height: 2rem !important;
+                padding: 0.25rem !important;
+            }
+            
+            #mobile-menu-button svg {
+                width: 1rem !important;
+                height: 1rem !important;
+            }
+        }
+        
+        /* Ultra small screens (Galaxy Fold, etc.) */
+        @media (max-width: 320px) {
+            header .flex.items-center:first-child {
+                max-width: 55% !important;
+            }
+            
+            header .flex.items-center:first-child .text-xl {
+                font-size: 0.625rem !important;
+            }
+            
+            header .space-x-3 {
+                gap: 0.25rem !important;
+            }
+        }
+        
+        .cosmic-bg {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0b2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 20s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-100px); }
+        }
+        
+        .typewriter-text {
+            overflow: hidden;
+            border-right: 3px solid #8b5cf6;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typewriter 4s steps(40) infinite;
+        }
+        
+        .monk-card {
+            background: rgba(26, 11, 46, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .project-card {
+            background: linear-gradient(135deg, rgba(26, 11, 46, 0.8) 0%, rgba(22, 33, 62, 0.8) 100%) !important;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 92, 246, 0.6) !important;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex !important;
+            flex-direction: column;
+            min-height: 400px;
+            max-height: 500px;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3) !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.4);
+            border-color: rgba(139, 92, 246, 0.8);
+        }
+        
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        
+        .project-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 30%, currentColor 70%);
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+        
+        .shrine-input {
+            background: rgba(26, 11, 46, 0.5);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            color: #e0e7ff;
+            transition: all 0.3s ease;
+        }
+        
+        .shrine-input:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            outline: none;
+        }
+        
+        .hidden-quote {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .hidden-quote.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .orbital {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(139, 92, 246, 0.5);
+            animation: orbit 10s linear infinite;
+        }
+        
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="cosmic-bg font-tech text-cosmic-light loading">
+    <!-- Stars Background -->
+    <div class="stars"></div>
+    
+    <!-- Cosmic Navigation Header -->
+    <header class="fixed top-0 w-full z-50 bg-cosmic-dark bg-opacity-90 backdrop-blur-xl border-b border-cosmic-glow border-opacity-40 shadow-2xl" style="visibility: visible !important; opacity: 1 !important; z-index: 1000 !important; position: fixed !important;">
+        <div class="absolute inset-0 bg-gradient-to-r from-cosmic-purple via-cosmic-blue to-cosmic-purple opacity-20"></div>
+        <nav class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Cosmic Logo Section -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-cosmic-glow animate-pulse shadow-lg shadow-cosmic-glow">
+                            <img src="null.jpeg" alt="NullBaba" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-cosmic-glow rounded-full animate-ping"></div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xl font-monk font-bold text-cosmic-glow">NullBaba</span>
+                        <span class="text-xs text-cosmic-light font-tech opacity-80">The Monk Coder</span>
+                    </div>
+                </div>
+                
+                <!-- Cosmic Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#home" class="nav-link group flex items-center space-x-2 text-cosmic-light hover:text-cosmic-glow transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cosmic-glow hover:bg-opacity-10 font-monk relative" title="Home">
+                        <span class="text-sm">🧘‍♂️</span>
+                        <span class="font-semibold">Sanctuary</span>
+                    </a>
+                    <a href="#about" class="nav-link group flex items-center space-x-2 text-cosmic-light hover:text-cosmic-glow transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cosmic-glow hover:bg-opacity-10 font-monk relative" title="About">
+                        <span class="text-sm">📿</span>
+                        <span class="font-semibold">Wisdom</span>
+                    </a>
+                    <a href="#projects" class="nav-link group flex items-center space-x-2 text-cosmic-light hover:text-cosmic-glow transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cosmic-glow hover:bg-opacity-10 font-monk relative" title="Projects">
+                        <span class="text-sm">⚡</span>
+                        <span class="font-semibold">Creations</span>
+                    </a>
+                    <a href="#contact" class="nav-link group flex items-center space-x-2 text-cosmic-light hover:text-cosmic-glow transition-all duration-300 px-3 py-2 rounded-lg hover:bg-cosmic-glow hover:bg-opacity-10 font-monk relative" title="Contact">
+                        <span class="text-sm">�</span>
+                        <span class="font-semibold">Communion</span>
+                    </a>
+                    
+                    <!-- Cosmic Download Button -->
+                    <div class="ml-4">
+                        <button id="nav-download" class="bg-gradient-to-r from-cosmic-glow to-purple-600 hover:from-purple-600 hover:to-cosmic-glow text-white px-4 py-2 rounded-full font-monk font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cosmic-glow text-sm">
+                            📜 Sacred Scroll
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Cosmic Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-cosmic-light hover:text-cosmic-glow p-2 rounded-lg hover:bg-cosmic-glow hover:bg-opacity-10 transition-all duration-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Cosmic Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-cosmic-dark bg-opacity-95 backdrop-blur-xl border-t border-cosmic-glow border-opacity-30">
+            <div class="px-4 pt-3 pb-4 space-y-2">
+                <a href="#home" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 text-cosmic-light hover:text-cosmic-glow hover:bg-cosmic-glow hover:bg-opacity-10 rounded-lg transition-all duration-300 font-monk">
+                    <span class="text-lg">🧘‍♂️</span>
+                    <span class="font-semibold">Sanctuary</span>
+                    <span class="text-xs text-cosmic-light opacity-60 ml-auto">Home</span>
+                </a>
+                <a href="#about" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 text-cosmic-light hover:text-cosmic-glow hover:bg-cosmic-glow hover:bg-opacity-10 rounded-lg transition-all duration-300 font-monk">
+                    <span class="text-lg">📿</span>
+                    <span class="font-semibold">Wisdom</span>
+                    <span class="text-xs text-cosmic-light opacity-60 ml-auto">About</span>
+                </a>
+                <a href="#projects" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 text-cosmic-light hover:text-cosmic-glow hover:bg-cosmic-glow hover:bg-opacity-10 rounded-lg transition-all duration-300 font-monk">
+                    <span class="text-lg">⚡</span>
+                    <span class="font-semibold">Creations</span>
+                    <span class="text-xs text-cosmic-light opacity-60 ml-auto">Projects</span>
+                </a>
+                <a href="#contact" class="nav-link mobile-nav-link flex items-center space-x-3 px-3 py-2 text-cosmic-light hover:text-cosmic-glow hover:bg-cosmic-glow hover:bg-opacity-10 rounded-lg transition-all duration-300 font-monk">
+                    <span class="text-lg">�</span>
+                    <span class="font-semibold">Communion</span>
+                    <span class="text-xs text-cosmic-light opacity-60 ml-auto">Contact</span>
+                </a>
+                <div class="pt-3 border-t border-cosmic-glow border-opacity-20">
+                    <button id="mobile-download" class="w-full bg-gradient-to-r from-cosmic-glow to-purple-600 text-white px-4 py-3 rounded-lg font-monk font-semibold transition-all duration-300">
+                        📜 Download Sacred Scroll
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Immediate Navigation Visibility Script -->
+    <script>
+        (function() {
+            // Create a mutation observer to watch for any changes that might hide navigation
+            const observer = new MutationObserver(function(mutations) {
+                ensureNavVisibility();
+            });
+            
+            function ensureNavVisibility() {
+                const header = document.querySelector('header');
+                const navLinks = document.querySelectorAll('.nav-link');
+                const mobileMenuButton = document.querySelector('#mobile-menu-button');
+                const logoSection = document.querySelector('header .flex.items-center');
+                const desktopNav = document.querySelector('header .hidden.md\\:flex, header .md\\:flex');
+                const navContainer = document.querySelector('header nav > div');
+                const navItemsContainer = document.querySelector('header .space-x-1');
+                
+                // Force header visibility and proper positioning
+                if (header) {
+                    header.style.setProperty('visibility', 'visible', 'important');
+                    header.style.setProperty('opacity', '1', 'important');
+                    header.style.setProperty('z-index', '1000', 'important');
+                    header.style.setProperty('position', 'fixed', 'important');
+                    header.style.setProperty('top', '0', 'important');
+                    header.style.setProperty('width', '100%', 'important');
+                    header.style.setProperty('display', 'block', 'important');
+                }
+                
+                // Force navigation container layout
+                if (navContainer) {
+                    navContainer.style.setProperty('display', 'flex', 'important');
+                    navContainer.style.setProperty('align-items', 'center', 'important');
+                    navContainer.style.setProperty('justify-content', 'space-between', 'important');
+                    navContainer.style.setProperty('width', '100%', 'important');
+                    navContainer.style.setProperty('visibility', 'visible', 'important');
+                    navContainer.style.setProperty('opacity', '1', 'important');
+                }
+                
+                // Force navigation links visibility
+                navLinks.forEach(link => {
+                    link.style.setProperty('visibility', 'visible', 'important');
+                    link.style.setProperty('opacity', '1', 'important');
+                    link.style.setProperty('display', 'flex', 'important');
+                    link.style.setProperty('align-items', 'center', 'important');
+                });
+                
+                // Force mobile menu button visibility
+                if (mobileMenuButton) {
+                    mobileMenuButton.style.setProperty('visibility', 'visible', 'important');
+                    mobileMenuButton.style.setProperty('opacity', '1', 'important');
+                    mobileMenuButton.style.setProperty('display', 'block', 'important');
+                }
+                
+                // Force logo section visibility and positioning
+                if (logoSection) {
+                    logoSection.style.setProperty('visibility', 'visible', 'important');
+                    logoSection.style.setProperty('opacity', '1', 'important');
+                    logoSection.style.setProperty('display', 'flex', 'important');
+                    logoSection.style.setProperty('align-items', 'center', 'important');
+                }
+                
+                // Force desktop navigation visibility and positioning
+                if (desktopNav) {
+                    desktopNav.style.setProperty('visibility', 'visible', 'important');
+                    desktopNav.style.setProperty('opacity', '1', 'important');
+                    desktopNav.style.setProperty('display', 'flex', 'important');
+                    desktopNav.style.setProperty('align-items', 'center', 'important');
+                } else {
+                    // Fallback: find any hidden navigation container
+                    const hiddenNav = document.querySelector('header .hidden');
+                    if (hiddenNav && window.innerWidth >= 768) {
+                        hiddenNav.style.setProperty('visibility', 'visible', 'important');
+                        hiddenNav.style.setProperty('opacity', '1', 'important');
+                        hiddenNav.style.setProperty('display', 'flex', 'important');
+                        hiddenNav.style.setProperty('align-items', 'center', 'important');
+                    }
+                }
+                
+                // Force navigation items container positioning
+                if (navItemsContainer) {
+                    navItemsContainer.style.setProperty('visibility', 'visible', 'important');
+                    navItemsContainer.style.setProperty('opacity', '1', 'important');
+                    navItemsContainer.style.setProperty('display', 'flex', 'important');
+                    navItemsContainer.style.setProperty('align-items', 'center', 'important');
+                    navItemsContainer.style.setProperty('gap', '0.25rem', 'important');
+                }
+            }
+            
+            // Run immediately
+            ensureNavVisibility();
+            
+            // Start observing document changes
+            if (document.body) {
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['style', 'class']
+                });
+            }
+            
+            // Run when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    ensureNavVisibility();
+                    // Start observing after DOM is ready
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true,
+                        attributes: true,
+                        attributeFilter: ['style', 'class']
+                    });
+                });
+            }
+            
+            // Run periodically for the first 5 seconds to combat any animations
+            let counter = 0;
+            const interval = setInterval(() => {
+                ensureNavVisibility();
+                counter++;
+                if (counter >= 50) { // Stop after 5 seconds (50 * 100ms)
+                    clearInterval(interval);
+                    // Stop observing after 5 seconds to avoid performance issues
+                    observer.disconnect();
+                }
+            }, 100);
+            
+            // Also run on window load and resize
+            window.addEventListener('load', ensureNavVisibility);
+            window.addEventListener('resize', ensureNavVisibility);
+            
+            // Prevent any GSAP animations from affecting the header
+            window.addEventListener('DOMContentLoaded', function() {
+                // Override any GSAP animations that might target header elements
+                if (window.gsap) {
+                    const header = document.querySelector('header');
+                    if (header) {
+                        gsap.set(header, {clearProps: "all"});
+                        gsap.set(header, {
+                            visibility: "visible",
+                            opacity: 1,
+                            zIndex: 1000,
+                            position: "fixed",
+                            top: 0,
+                            width: "100%"
+                        });
+                    }
+                }
+            });
+        })();
+    </script>
+    
+    <!-- Main Content -->
+    <main>
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="text-center z-10">
+            <!-- Floating Logo -->
+            <div class="mb-8 relative">
+                <div class="w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 mx-auto rounded-full overflow-hidden animate-float animate-pulse-glow">
+                    <img src="null.jpeg" alt="NullBaba Avatar" class="w-full h-full object-cover">
+                </div>
+                <!-- Orbitals around logo -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="orbital w-4 h-4 bg-cosmic-glow rounded-full" style="animation-delay: 0s;"></div>
+                    <div class="orbital w-3 h-3 bg-purple-400 rounded-full" style="animation-delay: -3s; animation-duration: 8s;"></div>
+                    <div class="orbital w-2 h-2 bg-blue-400 rounded-full" style="animation-delay: -6s; animation-duration: 12s;"></div>
+                </div>
+            </div>
+            
+            <!-- Typewriter Text -->
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-monk font-bold mb-4 text-cosmic-glow">
+                NullBaba
+            </h1>
+            <div class="text-lg sm:text-xl md:text-2xl mb-8 h-12 sm:h-16 flex items-center justify-center px-4">
+                <span class="typewriter-text font-tech">
+                    Awaken your code. Null the bugs. Embrace the silence.
+                </span>
+            </div>
+            
+            <!-- Download Button -->
+            <button id="download-scroll" class="bg-cosmic-glow hover:bg-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-monk text-base sm:text-lg transition-all duration-300 transform hover:scale-105 animate-pulse-glow">
+                Download Scroll
+            </button>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="w-6 h-10 border-2 border-cosmic-glow rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-cosmic-glow rounded-full mt-2 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="min-h-screen py-20 relative">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-monk font-bold mb-6 text-cosmic-glow">About NullBaba</h2>
+                <div class="w-24 h-1 bg-cosmic-glow mx-auto mb-8"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-8 md:gap-12">
+                <!-- About Content -->
+                <div class="space-y-6">
+                    <blockquote class="text-2xl font-monk italic text-cosmic-glow mb-8 text-center">
+                        "In the silence of code, I found my purpose. Through bugs and features, I achieved enlightenment."
+                    </blockquote>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Sacred Learning & Digital Enlightenment</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-2 border-cosmic-glow pl-4">
+                                <h4 class="font-semibold text-cosmic-light">🧘‍♂️ Bachelor of Engineering in Cyber Nirvana</h4>
+                                <p class="text-cosmic-glow text-sm">Ramaiah Institute of Technology, Bangalore | 2023 – 2026</p>
+                                <p class="text-gray-300 text-sm italic">"Where NullBaba learned to guard the digital realm with ancient cyber mantras and modern security sutras."</p>
+                                <p class="text-xs text-cosmic-light mt-2">🔐 Computer Science Engineering (Cyber Security) - Specializing in nullifying digital demons</p>
+                            </div>
+                            <div class="border-l-2 border-cosmic-glow pl-4">
+                                <h4 class="font-semibold text-cosmic-light">📿 Diploma in Computer Science</h4>
+                                <p class="text-cosmic-glow text-sm">Government Polytechnic Kalaburagi | 2020 – 2023</p>
+                                <p class="text-gray-300 text-sm italic">"The foundational monastery where young Baba first encountered the sacred languages of machines."</p>
+                                <p class="text-xs text-cosmic-light mt-2">💻 Computer Science Engineering - Foundation in the ancient arts of logic and algorithms</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-cosmic-purple bg-opacity-20 rounded-lg border border-cosmic-glow border-opacity-30">
+                            <p class="text-sm text-cosmic-light italic text-center">
+                                "Through endless nights of debugging meditation and algorithm contemplation, 
+                                NullBaba achieved the perfect balance between human wisdom and machine precision."
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Divine Recognition & Cosmic Achievements</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-2 border-cosmic-glow pl-4">
+                                <h4 class="font-semibold text-cosmic-light">⚡ Student Innovation Program - Unisys Temple</h4>
+                                <p class="text-gray-300 text-sm">Cleared first round of competitive industry mentorship program for AI/ML innovation projects.</p>
+                                <p class="text-xs text-cosmic-glow mt-2 italic">"Where NullBaba's PsychPal mental health guardian was blessed by the industry elders."</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-center space-x-2">
+                            <div class="w-2 h-2 bg-cosmic-glow rounded-full animate-pulse"></div>
+                            <p class="text-xs text-cosmic-light italic">More cosmic achievements manifest as the journey continues...</p>
+                            <div class="w-2 h-2 bg-cosmic-glow rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Sacred Digital Scrolls & Certificates</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-cosmic-glow rounded-full animate-pulse"></div>
+                                <span class="text-gray-300">📜 Software Engineering Sutra - NPTEL (IIT Kharagpur)</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                                <span class="text-gray-300">☁️ AWS Cloud Foundations - Mastery of the Digital Heavens</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                <span class="text-gray-300">🛡️ Google Cloud Cybersecurity - Guardian of Virtual Realms</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-gradient-to-r from-cosmic-purple to-cosmic-blue bg-opacity-20 rounded-lg">
+                            <p class="text-xs text-cosmic-light text-center italic">
+                                "Each certificate is a stepping stone on the path to digital enlightenment, 
+                                earned through countless hours of meditation with code."
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Sacred Skills & Technologies</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">Frontend</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">React.js</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Socket.io</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">WebRTC</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Tailwind CSS</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">HTML5/CSS3</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">Backend</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Node.js</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Express</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Spring Boot</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">REST APIs</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">WebSocket APIs</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">Databases</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">MongoDB</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">MySQL</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Redis</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">SQLite</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">DevOps & Security</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Docker</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">AWS EC2</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">CI/CD</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">JWT</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">SSL/TLS</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">AI/ML</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Scikit-learn</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">PyTorch</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Huggingface</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Python</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Pandas</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-3 text-cosmic-glow">Programming Languages</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">JavaScript</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Python</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">Java</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">C++</span>
+                                    <span class="bg-cosmic-purple text-xs px-3 py-1 rounded-full">SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="min-h-screen py-20 relative">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-monk font-bold mb-6 text-cosmic-glow">Sacred Projects</h2>
+                <div class="w-24 h-1 bg-cosmic-glow mx-auto mb-8"></div>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Behold the digital mantras and code sutras crafted in the silence of null
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+                <!-- Project 1 - Honeypot Threat Sensing Chakra -->
+                <div class="project-card p-6">
+                    <div class="project-icon bg-red-500 text-white">
+                        <span class="text-2xl relative z-10">🧘‍♂️</span>
+                    </div>
+                    <h3 class="text-xl font-monk font-bold mb-3 text-cosmic-glow">Honeypot - Threat Sensing Chakra</h3>
+                    <div class="text-gray-300 mb-4 space-y-2 text-sm flex-grow">
+                        <p class="italic">Null Baba foresaw malicious auras floating through cyberspace. To contain them, he chanted machine-learned mantras into a sacred dashboard.</p>
+                        <p>🔮 Built an AI-powered honeypot with real-time attack vector classification and IP tracing magic.</p>
+                        <p class="text-xs text-cosmic-glow">✨ Glowing red alert chakra pulsing with every attack detected.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">React.js</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Express</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">MongoDB</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Python</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Scikit-learn</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Redis</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Docker</span>
+                    </div>
+                    <div class="flex space-x-3 mt-auto">
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">GitHub →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 2 - PsychPal Mental Whisperer -->
+                <div class="project-card p-6">
+                    <div class="project-icon bg-blue-500 text-white">
+                        <span class="text-2xl relative z-10">🕉</span>
+                    </div>
+                    <h3 class="text-xl font-monk font-bold mb-3 text-cosmic-glow">PsychPal - The Mental Whisperer</h3>
+                    <div class="text-gray-300 mb-4 space-y-2 text-sm flex-grow">
+                        <p class="italic">Baba crafted a telepathic being – a federated learning-based mental health sage. It listens in silence, answers with empathy, and never stores karma (data).</p>
+                        <p>🧠 Uses PubMedBERT for sacred NLP and PySyft for spiritual privacy.</p>
+                        <p class="text-xs text-cosmic-glow">✨ Floating calm orb that glows when a response is generated.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">PyTorch</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Huggingface</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">PySyft</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Flask</span>
+                    </div>
+                    <div class="flex space-x-3 mt-auto">
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">Unisys Program →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 3 - Chattr Circle of Connection -->
+                <div class="project-card p-6">
+                    <div class="project-icon bg-green-500 text-white">
+                        <span class="text-2xl relative z-10">📿</span>
+                    </div>
+                    <h3 class="text-xl font-monk font-bold mb-3 text-cosmic-glow">Chattr - Monk's Circle of Connection</h3>
+                    <div class="text-gray-300 mb-4 space-y-2 text-sm flex-grow">
+                        <p class="italic">In his digital ashram, Null Baba built a real-time sanctum where words flow without identity.</p>
+                        <p>🌐 WebRTC and Socket.io weave the web of connection; no mind is ever alone.</p>
+                        <p class="text-xs text-cosmic-glow">✨ Real-time ripples with every message, chakra-colored rooms.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">React.js</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Node.js</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">WebRTC</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">MongoDB</span>
+                    </div>
+                    <div class="flex space-x-3 mt-auto">
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">Live Demo →</button>
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">GitHub →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 4 - POSIX Shell Command Sutras -->
+                <div class="project-card p-6">
+                    <div class="project-icon bg-yellow-500 text-white">
+                        <span class="text-2xl relative z-10">⚔️</span>
+                    </div>
+                    <h3 class="text-xl font-monk font-bold mb-3 text-cosmic-glow">POSIX Shell - Null Baba's Command Sutras</h3>
+                    <div class="text-gray-300 mb-4 space-y-2 text-sm flex-grow">
+                        <p class="italic">The baba meditated for 108 hours to build his own command-line temple.</p>
+                        <p>💻 Over 15 sacred built-ins, piping magic, tab-completion chants, and silent background rituals.</p>
+                        <p class="text-xs text-cosmic-glow">✨ Terminal-themed section with ASCII aura and ancient shell animations.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">C</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">UNIX/Linux</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">System Calls</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Process Management</span>
+                    </div>
+                    <div class="flex space-x-3 mt-auto">
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">GitHub →</button>
+                    </div>
+                </div>
+                
+                <!-- Project 5 - Spring Auth Gate of Righteous Access -->
+                <div class="project-card p-6">
+                    <div class="project-icon bg-purple-500 text-white">
+                        <span class="text-2xl relative z-10">🔐</span>
+                    </div>
+                    <h3 class="text-xl font-monk font-bold mb-3 text-cosmic-glow">Spring Auth - Gate of Righteous Access</h3>
+                    <div class="text-gray-300 mb-4 space-y-2 text-sm flex-grow">
+                        <p class="italic">Null Baba guarded the temple with JWT scrolls and encrypted Bcrypt mantras.</p>
+                        <p>🛡️ Role-Based Access Control ensures only the worthy pass through.</p>
+                        <p class="text-xs text-cosmic-glow">✨ Locked door animation with glowing key sigil upon correct role.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">Spring Boot</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">JWT</span>
+                        <span class="bg-cosmic-purple text-xs px-2 py-1 rounded">BCrypt</span>
+                    </div>
+                    <div class="flex space-x-3 mt-auto">
+                        <button class="text-cosmic-glow hover:underline transition-all duration-300 hover:text-purple-300">GitHub →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen py-20 relative">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-monk font-bold mb-6 text-cosmic-glow">The Sacred Shrine</h2>
+                <div class="w-24 h-1 bg-cosmic-glow mx-auto mb-8"></div>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Send your digital prayers and null your doubts. NullBaba awaits your message.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Contact Form -->
+                <div class="monk-card p-8 rounded-lg">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label class="block text-cosmic-glow font-monk mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-lg shrine-input" placeholder="Your earthly name">
+                        </div>
+                        <div>
+                            <label class="block text-cosmic-glow font-monk mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-lg shrine-input" placeholder="your@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-cosmic-glow font-monk mb-2">Message</label>
+                            <textarea rows="5" class="w-full px-4 py-3 rounded-lg shrine-input" placeholder="Share your coding wisdom or seek guidance..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-cosmic-glow hover:bg-purple-600 text-white py-3 rounded-lg font-monk text-lg transition-all duration-300 transform hover:scale-105">
+                            Send Message to NullBaba
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Digital Presence</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-cosmic-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-gray-300">nullbaba@enlightened.codes</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-cosmic-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="text-gray-300">Mystic Mountains, Digital Realm</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Social Orbitals</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-12 h-12 bg-cosmic-glow rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.112.222.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.74-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-cosmic-glow rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-cosmic-glow rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.097.118.112.222.083.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.74-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="w-12 h-12 bg-cosmic-glow rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="monk-card p-6 rounded-lg">
+                        <h3 class="text-xl font-monk font-bold mb-4 text-cosmic-glow">Meditation Hours</h3>
+                        <div class="space-y-2 text-gray-300">
+                            <div class="flex justify-between">
+                                <span>Monday - Friday:</span>
+                                <span>24/7 (Code Never Sleeps)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Weekend:</span>
+                                <span>Deep Debugging Mode</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Response Time:</span>
+                                <span>Within 24 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-cosmic-purple">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="mb-8">
+                <span class="text-3xl font-monk font-bold text-cosmic-glow">NullBaba</span>
+                <p class="text-gray-300 mt-2">May your code be bug-free and your pointers never null</p>
+            </div>
+            <div class="text-gray-400">
+                <p>&copy; 2025 NullBaba. All rights reserved. Licensed under the MIT License of Enlightenment.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Hidden Easter Egg -->
+    <div id="easter-egg" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden">
+        <div class="text-center">
+            <div class="text-6xl mb-4">🧘‍♂️</div>
+            <div class="text-2xl font-monk text-cosmic-glow mb-4 hidden-quote">
+                "May the bugs be nullified."
+            </div>
+            <button id="close-easter-egg" class="text-cosmic-glow hover:underline">Close</button>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Toggle mobile menu
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    // Update button icon
+                    const svg = mobileMenuButton.querySelector('svg');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                    } else {
+                        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+                    }
+                });
+            }
+            
+            // Close mobile menu when clicking on a link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        const svg = mobileMenuButton.querySelector('svg');
+                        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                    }
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    const isClickInsideMenu = mobileMenu.contains(event.target);
+                    const isClickOnButton = mobileMenuButton.contains(event.target);
+                    
+                    if (!isClickInsideMenu && !isClickOnButton) {
+                        mobileMenu.classList.add('hidden');
+                        const svg = mobileMenuButton.querySelector('svg');
+                        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+                    }
+                }
+            });
+            
+            // 🥚 EASTER EGG FUNCTIONALITY 🥚
+            const easterEgg = document.getElementById('easter-egg');
+            const closeEasterEgg = document.getElementById('close-easter-egg');
+            const hiddenQuote = document.querySelector('.hidden-quote');
+            
+            // Method 1: Konami Code (↑↑↓↓←→←→BA)
+            let konamiCode = [];
+            const konamiSequence = [
+                'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+                'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+                'KeyB', 'KeyA'
+            ];
+            
+            // Method 2: Click sequence on logo
+            let logoClickCount = 0;
+            const logo = document.querySelector('header img');
+            
+            // Method 3: Type "nullbaba" anywhere
+            let typedSequence = '';
+            const secretPhrase = 'nullbaba';
+            
+            // Method 4: Hold Shift + Ctrl + Alt and click the title
+            const mainTitle = document.querySelector('h1');
+            
+            // Konami Code listener
+            document.addEventListener('keydown', function(e) {
+                konamiCode.push(e.code);
+                if (konamiCode.length > konamiSequence.length) {
+                    konamiCode.shift();
+                }
+                
+                if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+                    triggerEasterEgg('🎮 Konami Code Master!');
+                    konamiCode = [];
+                }
+            });
+            
+            // Logo click sequence (click 7 times rapidly)
+            if (logo) {
+                logo.addEventListener('click', function() {
+                    logoClickCount++;
+                    if (logoClickCount >= 7) {
+                        triggerEasterEgg('🖼️ Logo Whisperer!');
+                        logoClickCount = 0;
+                    }
+                    
+                    // Reset counter after 2 seconds
+                    setTimeout(() => {
+                        logoClickCount = 0;
+                    }, 2000);
+                });
+            }
+            
+            // Typing sequence listener
+            document.addEventListener('keypress', function(e) {
+                typedSequence += e.key.toLowerCase();
+                if (typedSequence.length > secretPhrase.length) {
+                    typedSequence = typedSequence.slice(-secretPhrase.length);
+                }
+                
+                if (typedSequence === secretPhrase) {
+                    triggerEasterEgg('⌨️ Secret Phrase Sage!');
+                    typedSequence = '';
+                }
+            });
+            
+            // Special key combination + click
+            if (mainTitle) {
+                mainTitle.addEventListener('click', function(e) {
+                    if (e.shiftKey && e.ctrlKey && e.altKey) {
+                        triggerEasterEgg('🔥 Ultimate Key Combo!');
+                    }
+                });
+            }
+            
+            // Method 5: Double-click the cosmic background stars
+            const stars = document.querySelector('.stars');
+            if (stars) {
+                stars.addEventListener('dblclick', function() {
+                    triggerEasterEgg('⭐ Star Seeker!');
+                });
+            }
+            
+            // Method 6: Right-click the scroll indicator 3 times
+            let scrollIndicatorRightClicks = 0;
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                scrollIndicator.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    scrollIndicatorRightClicks++;
+                    if (scrollIndicatorRightClicks >= 3) {
+                        triggerEasterEgg('📜 Scroll Mystic!');
+                        scrollIndicatorRightClicks = 0;
+                    }
+                    
+                    setTimeout(() => {
+                        scrollIndicatorRightClicks = 0;
+                    }, 3000);
+                });
+            }
+            
+            // Function to trigger the Easter egg
+            function triggerEasterEgg(discoveryMethod) {
+                if (easterEgg) {
+                    // Define unique messages for each trigger method
+                    const messages = {
+                        '🎮 Konami Code Master!': `
+                            "🎮 Gaming Master! You've unlocked the ancient code sequence!"<br>
+                            <small class="text-cosmic-light opacity-70">"The sacred kombat within code brings enlightenment."</small>
+                        `,
+                        '🖼️ Logo Whisperer!': `
+                            "🖼️ Logo Whisperer! Your persistence awakens the avatar!"<br>
+                            <small class="text-cosmic-light opacity-70">"Seven clicks to pierce the veil of digital consciousness."</small>
+                        `,
+                        '⌨️ Secret Phrase Sage!': `
+                            "⌨️ Secret Phrase Sage! You spoke the sacred name!"<br>
+                            <small class="text-cosmic-light opacity-70">"In speaking the name, you summon the presence."</small>
+                        `,
+                        '🔥 Ultimate Key Combo!': `
+                            "🔥 Ultimate Combo Master! You've mastered the forbidden keystroke!"<br>
+                            <small class="text-cosmic-light opacity-70">"The trinity of keys unlocks the deepest mysteries."</small>
+                        `,
+                        '⭐ Star Seeker!': `
+                            "⭐ Star Seeker! You've touched the cosmic void!"<br>
+                            <small class="text-cosmic-light opacity-70">"Between the stars lies infinite possibility."</small>
+                        `,
+                        '📜 Scroll Mystic!': `
+                            "📜 Scroll Mystic! You've discovered the path to enlightenment!"<br>
+                            <small class="text-cosmic-light opacity-70">"The scroll reveals what lies beyond the visible."</small>
+                        `
+                    };
+                    
+                    // Update the quote with the specific message
+                    if (hiddenQuote) {
+                        hiddenQuote.innerHTML = messages[discoveryMethod] || `
+                            "May the bugs be nullified."<br>
+                            <small class="text-cosmic-light opacity-70">Discovered via: ${discoveryMethod}</small>
+                        `;
+                    }
+                    
+                    easterEgg.classList.remove('hidden');
+                    easterEgg.style.display = 'flex';
+                    
+                    // Add animation to the quote
+                    setTimeout(() => {
+                        if (hiddenQuote) {
+                            hiddenQuote.classList.add('show');
+                        }
+                    }, 100);
+                    
+                    // Add some visual effects
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Play a subtle animation
+                    if (window.gsap) {
+                        gsap.fromTo(easterEgg, 
+                            { opacity: 0, scale: 0.8 },
+                            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }
+                        );
+                    }
+                }
+            }
+            
+            // Close Easter egg functionality
+            if (closeEasterEgg) {
+                closeEasterEgg.addEventListener('click', closeEasterEggModal);
+            }
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && easterEgg && !easterEgg.classList.contains('hidden')) {
+                    closeEasterEggModal();
+                }
+            });
+            
+            // Close on background click
+            if (easterEgg) {
+                easterEgg.addEventListener('click', function(e) {
+                    if (e.target === easterEgg) {
+                        closeEasterEggModal();
+                    }
+                });
+            }
+            
+            function closeEasterEggModal() {
+                if (easterEgg) {
+                    if (window.gsap) {
+                        gsap.to(easterEgg, {
+                            opacity: 0,
+                            scale: 0.8,
+                            duration: 0.3,
+                            ease: "back.in(1.7)",
+                            onComplete: () => {
+                                easterEgg.classList.add('hidden');
+                                easterEgg.style.display = 'none';
+                                document.body.style.overflow = '';
+                                if (hiddenQuote) {
+                                    hiddenQuote.classList.remove('show');
+                                }
+                            }
+                        });
+                    } else {
+                        easterEgg.classList.add('hidden');
+                        easterEgg.style.display = 'none';
+                        document.body.style.overflow = '';
+                        if (hiddenQuote) {
+                            hiddenQuote.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
